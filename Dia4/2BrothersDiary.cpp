@@ -36,16 +36,15 @@ pair<bool, char> maxApariciones(string linea){
 	for(unsigned int i = 0; i < linea.size(); i++){
 		forn(j, 26){
 			if(linea[i] == alphabet[j]){
-				resultado[j].first++;
+				resultado[j] = make_pair(resultado[j].first+1,resultado[j].second);
 			}
 		}
 	}
 	sort(resultado.begin(), resultado.end());
 
     pair<bool, char> respuesta;
-    respuesta.second = resultado[25].second;
-    respuesta.first = (resultado[25].first != resultado[24].first);
-
+    respuesta = make_pair((resultado[25].first != resultado[24].first),resultado[25].second);
+   
     return respuesta;
 }
 
@@ -64,6 +63,7 @@ int main(){
 		cin >> aux;
 		diario.push_back(aux);
 	}
+
 
 	forn(i, diario.size()){
 		pair<bool, char> parAux = maxApariciones(diario[i]);
@@ -88,4 +88,5 @@ int main(){
 
 	}
 	return 0;
+	
 }
