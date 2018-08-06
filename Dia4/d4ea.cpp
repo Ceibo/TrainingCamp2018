@@ -5,6 +5,8 @@
 
 #define DBG(x) cerr << #x << ": " << x << endl;
 #define uppercase(x) ((((x)<='z') && (x)>=('a'))?(x)+('A'-'a'):(x))
+#define dprint(v) cout << #v"=" << v << endl
+
 
 using namespace std;
 
@@ -29,7 +31,7 @@ int main(void)
 	digits[5] = 'V';
 	digits[6] = 'I';
 	
-	cin >> input;
+	std::getline(std::cin, input);
 	for(int i=0;i<7;i++){
 		total_digits[i]=0;
 	}
