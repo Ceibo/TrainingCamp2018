@@ -74,43 +74,22 @@ int main(){
         }
     }
 
-    for(int i = 0; i < h; i++){
-        for(int j = 0; j < w; j++){
-            if(poligono[i][j] == '.'){
-                area ++;
-            }else{
-                area = area + 0.5;
-            }
-        }
-    }
-
-    int pLNC = primerLineaNoCompleta(poligono);
     int uLNC = ultimaLineaNoCompleta(poligono);
-    for(int i = pLNC; i < uLNC+1; i++){
+    int pLNC = primerLineaNoCompleta(poligono);
+
+    forr(i, pLNC , uLNC+1){
+        bool adentro = false;
         forn(j, w){
-            if(not(lineaCompleta(poligono[i]))){
-                if(poligono[i][j] != '.'){
-                    break;
-                }else{
-                    area --;
-                }
+            if(poligono[i][j] !=  '.' ){
+                adentro = not(adentro);
+                area = area + 0.5;
+            }else if(adentro == true){
+                area++;
+            }else if(lineaCompleta(poligono[i])){
+                area++;
             }
         }
     }
-
-
-    for(int i = pLNC; i < uLNC+1; i++){
-         if(not(lineaCompleta(poligono[i]))){
-            for(int j = w-1; j >= 0; j--){
-                if(poligono[i][j] != '.'){
-                    break;
-                }else{
-                    area --;
-                }
-            }
-        }
-    }
-
 
     cout << area << endl;
     return 0;
