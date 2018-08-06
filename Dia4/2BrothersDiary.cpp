@@ -1,4 +1,3 @@
-#include <queue>
 #define DBG(x) cerr << #x << ": " << x << endl;
 #include <iostream>     // std::cout
 #include <algorithm>    // std::sort
@@ -29,8 +28,10 @@ pair<bool, char> maxApariciones(string linea){
     std::iota(alphabet.begin(), alphabet.end(), 'A');
     std::vector<pair<int, char>> resultado;
     forn(i, 26){
-    	resultado[i].second = alphabet[i];
-    	resultado[i].first = 0;
+    	pair<int, char> auxPar;
+    	auxPar.second = alphabet[i];
+    	auxPar.first = 0;
+    	resultado.push_back(auxPar);
     }
 
 	for(unsigned int i = 0; i < linea.size(); i++){
@@ -44,44 +45,51 @@ pair<bool, char> maxApariciones(string linea){
 
     pair<bool, char> respuesta;
     respuesta = make_pair((resultado[25].first != resultado[24].first),resultado[25].second);
-   
+
     return respuesta;
 }
 
 
 char desplazar(char letra, int distancia){
-	char res = (letra-'A' + distancia)%26;
-	return res;
+	int res = (((letra-'A' - distancia) %26) + 26) %26;
+	std::vector<char> alphabet(26);
+    std::iota(alphabet.begin(), alphabet.end(), 'A');
+
+    char abc = alphabet[res];
+	return abc;
 }
 
 int main(){
 	int cantLineas;
 	cin >> cantLineas;
+	cantLineas ++;
 	std::vector<string> diario;
 	forn(i, cantLineas){
 		string aux;
-		cin >> aux;
+		std::getline(std::cin, aux);
 		diario.push_back(aux);
 	}
 
-
-	forn(i, diario.size()){
+	for(int i = 1; i < diario.size(); i++){
 		pair<bool, char> parAux = maxApariciones(diario[i]);
 		int distancia;
 		if(parAux.first == false){
 			cout << "NOT POSSIBLE" << endl;
 		}else{
-			int distanciaAux =  'E' - parAux.second;
-			distancia = distanciaAux%26-1;
-
+			int distanciaAux = -parAux.second + 'E';
+			distanciaAux = distanciaAux*(-1);
+			distancia = ((distanciaAux %26) + 26) %26;
 			string stringAux = diario[i];
 			forn(j, diario[i].size()){
-				stringAux[j] = desplazar(diario[i][j],distancia);
+				if(stringAux[j] != ' '){
+					stringAux[j] = desplazar(diario[i][j],distancia);
+				}
 			}
-			
-			cout << distancia << " "; 
+
+			cout << distancia;
+			cout << " ";
 			forn(j,diario[i].size()){
-			cout << stringAux[j];
+				cout << stringAux[j];
 			}
 		}
 		cout << endl;
