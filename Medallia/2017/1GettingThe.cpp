@@ -21,16 +21,12 @@ typedef pair<int,int> ii;
 
 
 const int MAXN=100100;
-int n;
-
 
 int main() {
     ios::sync_with_stdio(0);
     int n;
     cin >> n;
-    dprint(n);
     vector<vector<int> > datosPersonas;
-
 	forn(i, n){
 		std::vector<int> aux;
 		int id;
@@ -46,10 +42,10 @@ int main() {
 		aux.pb(childrens);
 
 		string civilStatus;
-		std::getline(std::cin, civilStatus);
-
+		cin >> civilStatus;
+		string single("single");
 		int status;
-		if(civilStatus == "single"){
+		if(civilStatus.compare(single) == 0){
 			status = 1;
 		}else{
 			status = 0;
@@ -69,14 +65,15 @@ int main() {
 		int salarioi(0);
 		if( (datosPersonas[i][3]) == 1 && (datosPersonas[i][2] < 4) && (datosPersonas[i][2] > 0) && (datosPersonas[i][4] <= 40) && (datosPersonas[i][4] >= 30)){
 			salarioi = datosPersonas[i][1]*0.85;
-			salarioi =  salarioi - (salarioi*datosPersonas[i][2]*0.01);
+			salarioi =  salarioi - (salarioi*abs(4-datosPersonas[i][2])*0.01);
 		}
-		pair<int, int> aux1 = make_pair(salarioi, i); 
+		pair<int, int> aux1 = make_pair(salarioi, datosPersonas[i][0]); 
 		rankingSalarios.pb(aux1);
 	}
-
 	sort(rankingSalarios.begin(), rankingSalarios.end());
-	int idMaxSalario = rankingSalarios[rankingSalarios.size()-1].second;
+
+	int tam = rankingSalarios.size();
+	int idMaxSalario = rankingSalarios[tam-3].second;
 	cout << idMaxSalario;
     return 0;
 }
